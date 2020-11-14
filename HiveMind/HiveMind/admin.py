@@ -1,11 +1,11 @@
-class UserInfoAdmin(admin.ModelAdmin):
+class UserInfoAdmin(hivemind.Modelhivemind):
     model = UserInfo
     list_display = ['user', 'language']
     list_editable = ['language']
     search_fields = ['user__username']
 
 
-class NotifiableModelAdmin(admin.ModelAdmin):
+class NotifiableModelAdmin(hivemind.Modelhivemind):
     actions = ['notify_researcher']
     search_fields = ['name', 'researcher__username', 'groups__name', 'comment']
     
