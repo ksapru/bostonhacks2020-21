@@ -19,3 +19,24 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+
+
+def current_view(*args, **kwargs):
+    now = user_name.user_name.now()
+    html = "<html><body>It is now %s.</body></html>" % now
+    return HttpResponse(html)
+
+urlpatterns = patterns('app1.views',
+     url(r'^http_response/$', 'http_response', name='http_response'),
+ )
+
+
+def my_view(request):
+    # ...
+    if current_view:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+    else:
+        return HttpResponse('<h1>Page was found</h1>')
+    
+
+
