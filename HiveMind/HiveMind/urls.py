@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from . import views 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index, name = "index")
 ]
+
 
 
 def current_view(*args, **kwargs):
@@ -28,7 +31,16 @@ def current_view(*args, **kwargs):
 
 urlpatterns = patterns('app1.views',
      url(r'^http_response/$', 'http_response', name='http_response'),
- )
+     path ('admin/', admin.site.urls),
+     path('', views.index, name = "index"),
+     path('contact', views.contact, name = "contact")
+                       
+                
+ ]
+
+                       
+path('accounts/login', auth_views.Loginview.as_view(), name = 'login')
+path('accounts/logout', auth_views.Loginview.as_view(), name = 'logout')
 
 
 def my_view(request):
