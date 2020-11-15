@@ -3,6 +3,7 @@ import os
 import dbconnect
 from config import Constants
 
+
 class DbManager:
     def __init__(self):
         pwd = os.getcwd()
@@ -10,7 +11,16 @@ class DbManager:
         self.conn = dbconnect.DB()
         os.chdir(pwd)
 
-    def insert(self,table,cols,vals):
+    def formattedCols(self, base, items):
+        for item in items:
+            base += '\''
+            base += item
+            base += '\','
+
+        base = base[:-1]
+        return base
+
+    def insert(self, table, cols, vals):
         if table not in self.conn.tables:
             print('Table does not exist')
             return
@@ -23,16 +33,23 @@ class DbManager:
         # statement = "INSERT into" + self.conn.keyspace + "(\"Username\",\"Email\",\"Password\") " \
         #             "VALUES ('admin','admin@gmail.com','password')"
 
-        statement =  "INSERT into" + self.conn.keyspace + " ("
-        for col in cols:
-            statement += '\"'
-            statement += col
-            statement += '\",'
+        statement = "INSERT into " + self.conn.keyspace + '.' + table + " ("
 
-        statement = statement[:-1] + ")"
+        statement = self.formattedCols(statement, cols) + ") "
+
+        statement += "VALUES ("
+        statement = self.formattedCols(statement, vals) + ");"
 
         print(statement)
-        res = session.execute(statement).one()
+        try:
+            session.execute(statement).one()
+
+        except Exception as e:
+            print('Error with insert',e)
+            return
+
+        print('Insert success')
+        return
 
     def select(self, table, cols):
         if table not in self.conn.tables:
@@ -44,23 +61,25 @@ class DbManager:
             statement += '* '
         else:
             statement += "("
-            for col in cols:
-                statement += '\"'
-                statement += col
-                statement += '\",'
-            statement = statement[:-1] + ") "
+
+            statement = self.formattedCols(statement, cols) + ") "
 
         statement += "FROM " + self.conn.keyspace + "." + table + ';'
         session = self.conn.session
         res1 = session.execute(statement).one()
-        return [x for x in res1]
+        return [x for x in res1[0]]
+
 
 if __name__ == '__main__':
     dbs = DbManager()
     table = 'Users'
-    cols = ['Username', 'Email']
-    res1 = dbs.select(table,cols)
+    cols = ['Username', 'Email', 'Password']
+    vals = ['Smaran', 'smarangk@test.com', 'password']
+    res1 = dbs.select(table, cols)
     print(res1)
+
+    # dbs.insert(table, cols, vals)
+    dbs.select(table, cols)
 
 # else:
 #     print("An error occurred.")
