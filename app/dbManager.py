@@ -58,7 +58,7 @@ class DbManager:
         print('Insert success')
         return
 
-    def select(self, table, cols):
+    def selectstmt(self, table, cols):
         if table not in self.conn.tables:
             print('Table not found')
             return
@@ -72,17 +72,35 @@ class DbManager:
             statement = self.formattedCols(statement, cols, '\"') + ") "
 
         statement += "FROM " + self.conn.keyspace + "." + table + ';'
-        print(statement)
+        return statement
+
+    def select(self, table, cols):
         session = self.conn.session
+        statement = self.selectstmt(table,cols)
+        print(statement)
         res1 = session.execute(statement).all()
         return [x[0] for x in res1]
         # return []
 
+    def selectWhere(self,table,cols, condition):
+        session = self.conn.session
+        statement = self.selectstmt(table, cols)
+        statement = statement[:-1]
+        statement += " WHERE " + condition
+        statement += ';'
+
+        print(statement)
+        res1 = session.execute(statement).all()
+        return [x[0] for x in res1]
+
     def last_entry(self, table, pk):
         statement = "SELECT MAX(\"" + pk + "\") FROM " + \
                     self.conn.keyspace + '.' + table
+        print(statement)
         session = self.conn.session
         res = session.execute(statement).one()
+        if res[0] is None:
+            return 0
         return res[0]
 
     # USE only if you are sure of statement
@@ -111,6 +129,11 @@ if __name__ == '__main__':
     print(res2)
     res = dbs.select(table, cols)
     print(res)
+
+    cols = Constants.IMAGECOLS
+    table = "Images"
+    cond = 'ResearchId = 1'
+    print(dbs.selectWhere(table, cols, cond))
 
 # else:
 #     print("An error occurred.")

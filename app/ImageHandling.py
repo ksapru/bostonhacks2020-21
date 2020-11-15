@@ -22,7 +22,7 @@ class ImageHandle:
             return False
 
     @staticmethod
-    def save_img(image, researchId = 1, username = 'admin'):
+    def save_img(image, researchId=1, username='admin'):
         con = DbManager()
         if image.filename == "":
             print("No filename")
@@ -32,20 +32,34 @@ class ImageHandle:
         if fileExt:
             uploadname = secure_filename(image.filename)
             table = 'Images'
-            pk = 'ImageID'
+            pk = 'ImageId'
             imid = con.last_entry(table, pk) + 1
             # imid = 2
-            filename = str(imid) + str(fileExt)
+            filename = str(imid) + '.' + str(fileExt)
 
             os.chdir(Constants.UPLOAD_FOLDER)
             image.save(os.path.join(Constants.UPLOAD_FOLDER, filename))
             os.chdir(Constants.BASEDIR)
 
-            vals = [imid, username, uploadname, researchId, 'taken at:22-3-2020']
+            vals = [imid, username, filename, researchId, 'taken at:22-3-2020']
 
-            con.insert(table,Constants.IMAGECOLS,vals)
+            con.insert(table, Constants.IMAGECOLS, vals)
 
             print("Image saved")
 
         else:
             print("That file extension is not allowed")
+
+    @staticmethod
+    def getPics(researchid=1, username='admin'):
+        con = DbManager()
+        data = con.select('Images', cols=Constants.IMAGECOLS)
+        files = []
+        print(data)
+        for vals in data:
+            file = vals[2]
+            id = vals[0]
+            if id == researchid:
+                files.append(file)
+
+        return files

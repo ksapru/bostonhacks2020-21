@@ -14,19 +14,29 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/picture')
-def upload_form():
-    return render_template('project_page.html')
+@app.route('/project')
+def projectBase():
+    return redirect('/project/1')
+
+@app.route('/project/<projectid>')
+def upload_form(projectid):
+    if projectid is None:
+        projectid = 1
+
+    relevantpics = ImageHandle.getPics(researchid=projectid)
+    pics = [Constants.STATICDIR + x for x in relevantpics]
+    print(pics)
+    return render_template('project_page.html',pics = pics)
 
 
-@app.route('/picture', methods=['POST'])
+@app.route('/project/<projectid>', methods=['POST'])
 def upload_image():
     if request.method == "POST" and request.files:
         image = request.files["image"]
         ImageHandle.save_img(image)
         return redirect(request.url)
 
-    return render_template("upload.html")
+    return render_template("project_page.html")
 
 
 @app.route('/browse')
