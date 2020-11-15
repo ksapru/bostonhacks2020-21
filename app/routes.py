@@ -1,5 +1,5 @@
 import os
-from flask import render_template
+from flask import render_template, session
 from app import app
 import urllib.request
 from flask import Flask, flash, request, redirect, url_for, render_template
@@ -10,8 +10,8 @@ from app.ImageHandling import ImageHandle
 
 
 @app.route("/")
-def hello():
-    return "Hello, World!"
+def index():
+    return "Log in: research:"
 
 
 @app.route('/picture')
@@ -53,3 +53,35 @@ def upload_image():
 def display_image(filename):
     # print('display_image filename: ' + filename)
     return redirect(url_for('static', filename='uploads/' + filename), code=301)
+
+@app.route('/')
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('You need to login first.')
+            return redirect(url_for('login'))
+    return wrap
+
+
+
+@app.route('/')
+@login_required
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            error = 'Invalid credentials. Please try again'
+        else:
+            session['logged_in'] = True
+            flash('You were just logged in!')
+            return redirect(url_for('home'))
+    return render_template(('login.html'))
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    flash('You were just logged out!')
+    return  redirect(url_for('welcome.'))
