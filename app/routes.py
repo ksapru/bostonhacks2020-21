@@ -1,14 +1,3 @@
-import users as users
-
-from dbconnect import session
-
-
-def user(username, password):
-    pass
-
-
-users.append(user(username ='Anthony', password ='password'))
-users.append(user(username ='bob', password ='password'))
 import os
 from flask import render_template
 from app import app
@@ -66,14 +55,15 @@ def display_image(filename):
     return redirect(url_for('static', filename='uploads/' + filename), code=301)
 
 def login_required(f):
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return f(*args,**kwargs)
-        else:
-            flash('You need to login first')
-            return redirect(url_for('login'))
-        return wrap
+    pass
+    # @wraps(f)
+    # def wrap(*args, **kwargs):
+    #     if 'logged_in' in session:
+    #         return f(*args,**kwargs)
+    #     else:
+    #         flash('You need to login first')
+    #         return redirect(url_for('login'))
+    #     return wrap
 
 @app.route('/')
 @login_required
@@ -83,7 +73,6 @@ def home():
     return render_template('index.html')
 
 @app.route('/welcome')
-
 def welcome():
     return render_template('login.html')
 
@@ -91,17 +80,12 @@ def welcome():
 @app.route('/login', methods = ['GET','POST'])
 def login():
     error = None
-    if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid credentials. Please try again'
-        else:
-            session['logged_in'] = True
-            return redirect(url_for('home'))
-    return render_template(('login.html', error=error)
+    # if request.method == 'POST':
+    #     if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+    #         error = 'Invalid credentials. Please try again'
+    #     else:
+    #         session['logged_in'] = True
+    #         return redirect(url_for('home'))
+    return render_template(('login.html'))
 
 
-@app.route('/logout()')
-def logout():
-    session.pop('logged_in', None)
-    flash('You were just logged in')
-    return redirect(url_for('welcome.'))
