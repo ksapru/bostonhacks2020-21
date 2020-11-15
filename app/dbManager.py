@@ -11,18 +11,19 @@ class DbManager:
         self.conn = dbconnect.DB()
         os.chdir(pwd)
 
-    def formattedCols(self, base, items, token='\"', type='select'):
+    def formattedCols(self, base, items, token='\"', calltype='select'):
         for item in items:
-            if type == 'select':
+            if calltype == 'select':
                 item = str(item)
                 base += token
                 base += item
                 base += token
                 base += ','
-            else:
-                base += item
-                base += ','
 
+            else:
+                if type(item) == type(1):
+                    base += item
+                    base += ','
 
         base = base[:-1]
         return base
