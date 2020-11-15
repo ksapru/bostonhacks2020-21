@@ -65,6 +65,28 @@ def display_image(filename):
     # print('display_image filename: ' + filename)
     return redirect(url_for('static', filename='uploads/' + filename), code=301)
 
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args,**kwargs)
+        else:
+            flash('You need to login first')
+            return redirect(url_for('login'))
+        return wrap
+
+@app.route('/')
+@login_required
+
+def home():
+
+    return render_template('index.html')
+
+@app.route('/welcome')
+
+def welcome():
+    return render_template('login.html')
+
 
 @app.route('/login', methods = ['GET','POST'])
 def login():
@@ -75,10 +97,11 @@ def login():
         else:
             session['logged_in'] = True
             return redirect(url_for('home'))
-    return render_template(('login.html', None)
+    return render_template(('login.html', error=error)
 
 
 @app.route('/logout()')
 def logout():
     session.pop('logged_in', None)
+    flash('You were just logged in')
     return redirect(url_for('welcome.'))
