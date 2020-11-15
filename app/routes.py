@@ -16,7 +16,7 @@ def home():
 
 @app.route('/picture')
 def upload_form():
-    return render_template('upload.html')
+    return render_template('project_page.html')
 
 
 @app.route('/picture', methods=['POST'])
@@ -27,9 +27,20 @@ def upload_image():
         return redirect(request.url)
 
     return render_template("upload.html")
+
+
+@app.route('/browse')
+def view_projects():
+    obj = DbManager()
+    data = obj.select('Research', Constants.RESEARCHCOLS)
+    print(data)
+    return render_template('catalog.html', projects = data)
+
+
 @app.route('/add')
 def addition1():
     return render_template('add.html')
+
 
 @app.route('/add', methods=['POST'])
 def addition():
@@ -42,27 +53,22 @@ def addition():
     table = "Research"
     cols = names
     vals = values
-    vals[-1] = obj.last_entry(table,"ResearchID") + 1
-    print(cols,vals)
+    vals[-1] = obj.last_entry(table, "ResearchID") + 1
+    print(cols, vals)
     obj.insert(table, cols, vals)
     return redirect(request.url)
-
-
-
-
-
-
-
 
 
 @app.route('/display/<filename>')
 def display_image(filename):
     # print('display_image filename: ' + filename)
-    dbconnect = DbManager()
-    table = "Research"
-    col = ["ResearchTitle","Category"]
-    result =dbconnect.select(table,col)
-    return redirect(url_for('static', filename='uploads/' + filename), code=301)
+    # dbconnect = DbManager()
+    # table = "Research"
+    # col = ["ResearchTitle", "Category"]
+    # result = dbconnect.select(table, col)
+    fn = Constants.UPLOAD_FOLDER + filename
+    print(fn)
+    return redirect(url_for('static', filename=fn), code=301)
 
 
 def login_required(f):

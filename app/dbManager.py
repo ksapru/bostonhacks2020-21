@@ -74,8 +74,8 @@ class DbManager:
         statement += "FROM " + self.conn.keyspace + "." + table + ';'
         print(statement)
         session = self.conn.session
-        res1 = session.execute(statement).one()
-        return [x for x in res1[0]]
+        res1 = session.execute(statement).all()
+        return [x[0] for x in res1]
         # return []
 
     def last_entry(self, table, pk):
@@ -93,10 +93,10 @@ class DbManager:
 if __name__ == '__main__':
     dbs = DbManager()
     table = 'Users'
-    cols = ['Username', 'Email', 'Password']
-    vals = ['Smaran2', 'smarangk@test.com', 'password']
-    res1 = dbs.select(table, cols)
-    print(res1)
+    # cols = ['Username', 'Email', 'Password']
+    # vals = ['Smaran2', 'smarangk@test.com', 'password']
+    # res1 = dbs.select(table, cols)
+    # print(res1)
 
     # dbs.insert(table, cols, vals)
     # dbs.select(table, cols)
@@ -109,6 +109,8 @@ if __name__ == '__main__':
     pk = 'ResearchID'
     res2 = dbs.last_entry(table, pk)
     print(res2)
+    res = dbs.select(table, cols)
+    print(res)
 
 # else:
 #     print("An error occurred.")

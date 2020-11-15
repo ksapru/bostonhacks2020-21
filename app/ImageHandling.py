@@ -22,7 +22,7 @@ class ImageHandle:
             return False
 
     @staticmethod
-    def save_img(image):
+    def save_img(image, researchId = 1, username = 'admin'):
         con = DbManager()
         if image.filename == "":
             print("No filename")
@@ -30,14 +30,20 @@ class ImageHandle:
 
         fileExt = ImageHandle.allowed_image(image.filename)
         if fileExt:
-            filename = secure_filename(image.filename)
+            uploadname = secure_filename(image.filename)
             table = 'Images'
             pk = 'ImageID'
-            filename = con.last_entry(table, pk) + fileExt
+            imid = con.last_entry(table, pk) + 1
+            # imid = 2
+            filename = str(imid) + str(fileExt)
+
             os.chdir(Constants.UPLOAD_FOLDER)
             image.save(os.path.join(Constants.UPLOAD_FOLDER, filename))
             os.chdir(Constants.BASEDIR)
 
+            vals = [imid, username, uploadname, researchId, 'taken at:22-3-2020']
+
+            con.insert(table,Constants.IMAGECOLS,vals)
 
             print("Image saved")
 
