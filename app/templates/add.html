@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <style>
+        body{
+            margin: 0;
+            font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+        }
+        nav{
+            text-align: center;
+            padding: 0.5%;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #85dcb8;
+        }
+        li{
+            display: inline-block;
+            font-size: 2.5vh;
+            margin-right: 10%;
+        }
+        .nav-link{
+            text-decoration: none;
+            color: #000;
+        }
+        a{
+            text-decoration: none;
+        }
+        h2{
+            font-size: 3.5vh;
+            display: inline-block
+        }
+        h3{
+            font-size: 3vh;
+        }
+        p{
+            font-size: 2vh;
+        }
+        #upload{
+            width: 800px;
+            padding-left: 3%;
+            box-sizing: border-box;
+        }
+        .form{
+            margin: 20px 0 20px 0;
+            width: 100%;
+            height: 4.5vh;
+            font-size: 2.5vh;
+            border-radius: 3.5px;
+            display: block;
+            box-sizing: border-box;
+        }
+        label{
+            font-size: 2.5vh;
+        }
+        button{
+            width: 30%;
+            padding: 1%;
+            box-sizing: border-box;
+            font-size: 2.5vh;
+            background-color: #253d86;
+            color: #fff;
+            border-radius: 5px;
+            
+
+        }        
+        
+        
+        </style>
+
+	</head>
+    <body>
+    	<div id="wrapper">
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link">Animals</a></li>
+                    <li><a href="#" class="nav-link">Plants</a></li>
+                    <li><a href="#" class="nav-link">Other</a></li>
+                </ul>
+            </nav>
+            <div id="content">
+
+                <form action="/project_page" method="POST" enctype="multipart/form-data">
+
+                    <div id="upload">
+                        <h1>Create You Own Project</h1>
+                        <label for="name"><b>Project Name</b></label>
+                        <input type="text" class="form" placeholder="Enter Project name" name="project_name" required>
+
+                       <label for="description"><b>Project Description</b></label>
+                       <input type="text" class="form" placeholder="Description" name="des" required>
+                       <button type="submit">Post</button>
+                    </div>
+            
+            
+                  </form>
+            
+        </div>
+
+        
+		
+	</body>
+</html>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <style>
         body{
             margin: 0;
@@ -25,9 +26,12 @@
             font-size: 2.5vh;
             margin-right: 10%;
         }
+        .nav-link{
+            text-decoration: none;
+            color: #000;
+        }
         #content{
-            padding-left: 5%;
-            padding-top: 1%;
+            padding-left: 0;
             box-sizing: border-box;
             max-width: 1200px;
             min-height: 90vh;
@@ -42,6 +46,11 @@
             box-sizing: border-box;
             border: 1px solid #e5e5e5;
             border-radius: 5px;
+        }
+        #header{
+            background: linear-gradient(135deg, rgb(108, 83, 78) 0%, rgb(37, 30, 30) 100%);
+            color: #fff;
+            padding: 2%;
         }
         input[type="file"] {
                display: none;
@@ -93,14 +102,8 @@ button.btn{
     color: #fff;
     border: 1px solid #e5e5e5;
 }
-#search{
-    font-size: 2vh;
-    min-width: 100px;
-    background-color: #253d86;
-    padding: 10px;
-    border-radius: 5px;
-    color: #fff;
-    border: 1px solid #e5e5e5;
+#gallery{
+    padding-left: 2%;
 }
 
         
@@ -111,9 +114,9 @@ button.btn{
     	<div id="wrapper">
             <nav>
                 <ul>
-                    <li>Animals</li>
-                    <li>Plants</li>
-                    <li>Other</li>
+                    <li><a href="#" class="nav-link">Animals</a></li>
+                    <li><a href="#" class="nav-link">Plants</a></li>
+                    <li><a href="#" class="nav-link">Other</a></li>
                 </ul>
             </nav>
             <div id="content">
@@ -121,11 +124,11 @@ button.btn{
                     <h2>
                     Name of the project
                     </h2>
-                </div>
                 <div id="desription">
                     <h4>
                     Project description
                     </h4>
+                </div>
                 </div>
 
                 <form action="/project_page" method="POST" enctype="multipart/form-data">
@@ -142,8 +145,8 @@ button.btn{
             
                   </form>
 
-                <h1>Current Photos</h1>
                 <div id ="gallery">
+                    <h1>Current Photos</h1>
                 </div>
             </div>
         </div>
