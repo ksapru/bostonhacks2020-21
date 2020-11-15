@@ -1,5 +1,5 @@
 import os
-from flask import render_template
+from flask import render_template, session
 from app import app
 import urllib.request
 from flask import Flask, flash, request, redirect, url_for, render_template
@@ -10,8 +10,8 @@ from app.ImageHandling import ImageHandle
 
 
 @app.route("/")
-def hello():
-    return "Hello, World!"
+def index():
+    return "Log in: research:"
 
 
 @app.route('/picture')
@@ -66,10 +66,7 @@ def login_required(f):
     #     return wrap
 
 @app.route('/')
-@login_required
-
 def home():
-
     return render_template('index.html')
 
 @app.route('/welcome')
@@ -87,5 +84,4 @@ def login():
     #         session['logged_in'] = True
     #         return redirect(url_for('home'))
     return render_template(('login.html'))
-
 
