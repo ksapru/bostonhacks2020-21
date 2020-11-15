@@ -4,7 +4,7 @@ from cassandra.auth import PlainTextAuthProvider
 
 class DB:
     keyspace = 'bostonhacks'
-    tables = ['Users']
+    tables = ['Users', 'Research','Images']
 
     def __init__(self):
         cloud_config = {

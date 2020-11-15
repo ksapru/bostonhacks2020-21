@@ -11,8 +11,10 @@ class DbManager:
         self.conn = dbconnect.DB()
         os.chdir(pwd)
 
-    def formattedCols(self, base, items, token='\"'):
+    def formattedCols(self, base, items, token='\"', type = 'select'):
         for item in items:
+            if type == 'select':
+                item = str(item)
             base += token
             base += item
             base += token
@@ -39,7 +41,7 @@ class DbManager:
         statement = self.formattedCols(statement, cols, '\"') + ") "
 
         statement += "VALUES ("
-        statement = self.formattedCols(statement, vals, '\'') + ");"
+        statement = self.formattedCols(statement, vals, '\'', 'insert') + ");"
 
         print(statement)
         try:
@@ -72,6 +74,17 @@ class DbManager:
         return [x for x in res1[0]]
         # return []
 
+    def last_entry(self, table, pk):
+        statement = "SELECT MAX(\"" + pk + "\") FROM " + \
+                    self.conn.keyspace + '.' + table
+        session = self.conn.session
+        res = session.execute(statement).one()
+        return res[0]
+
+    # USE only if you are sure of statement
+    def custom(self, statement):
+        self.conn.session.execute(statement).all()
+
 
 if __name__ == '__main__':
     dbs = DbManager()
@@ -81,8 +94,16 @@ if __name__ == '__main__':
     res1 = dbs.select(table, cols)
     print(res1)
 
-    dbs.insert(table, cols, vals)
-    dbs.select(table, cols)
+    # dbs.insert(table, cols, vals)
+    # dbs.select(table, cols)
+    table = 'Research'
+    cols = ['ResearchID','ResearchTitle', 'ResearchDescription', 'Categories']
+    vals = [1, 'Interesting research about trees in my area', 'I wanted to get information about the trees in my area', 'Trees, nature']
+
+    # dbs.insert(table,cols,vals)
+    pk = 'ResearchID'
+    res2 = dbs.last_entry(table,pk)
+    print(res2)
 
 # else:
 #     print("An error occurred.")

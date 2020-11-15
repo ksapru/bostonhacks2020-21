@@ -21,30 +21,10 @@ def upload_form():
 
 @app.route('/picture', methods=['POST'])
 def upload_image():
-    if request.method == "POST":
-
-        if request.files:
-
-            image = request.files["image"]
-
-            if image.filename == "":
-                print("No filename")
-                return redirect(request.url)
-
-            if ImageHandle.allowed_image(image.filename):
-                filename = secure_filename(image.filename)
-
-                os.chdir(Constants.UPLOAD_FOLDER)
-                image.save(os.path.join(Constants.UPLOAD_FOLDER, filename))
-                os.chdir(Constants.BASEDIR)
-
-                print("Image saved")
-
-                return redirect(request.url)
-
-            else:
-                print("That file extension is not allowed")
-                return redirect(request.url)
+    if request.method == "POST" and request.files:
+        image = request.files["image"]
+        ImageHandle.save_img(image)
+        return redirect(request.url)
 
     return render_template("upload.html")
 
