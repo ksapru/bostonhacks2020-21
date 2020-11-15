@@ -17,7 +17,7 @@ class ImageHandle:
         ext = filename.rsplit(".", 1)[1]
 
         if ext.lower() in Constants.ALLOWED_EXTENSIONS:
-            return True
+            return ext
         else:
             return False
 
@@ -28,12 +28,16 @@ class ImageHandle:
             print("No filename")
             return
 
-        if ImageHandle.allowed_image(image.filename):
+        fileExt = ImageHandle.allowed_image(image.filename)
+        if fileExt:
             filename = secure_filename(image.filename)
-
+            table = 'Images'
+            pk = 'ImageID'
+            filename = con.last_entry(table, pk) + fileExt
             os.chdir(Constants.UPLOAD_FOLDER)
             image.save(os.path.join(Constants.UPLOAD_FOLDER, filename))
             os.chdir(Constants.BASEDIR)
+
 
             print("Image saved")
 

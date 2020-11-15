@@ -11,14 +11,18 @@ class DbManager:
         self.conn = dbconnect.DB()
         os.chdir(pwd)
 
-    def formattedCols(self, base, items, token='\"', type = 'select'):
+    def formattedCols(self, base, items, token='\"', type='select'):
         for item in items:
             if type == 'select':
                 item = str(item)
-            base += token
-            base += item
-            base += token
-            base += ','
+                base += token
+                base += item
+                base += token
+                base += ','
+            else:
+                base += item
+                base += ','
+
 
         base = base[:-1]
         return base
@@ -97,12 +101,13 @@ if __name__ == '__main__':
     # dbs.insert(table, cols, vals)
     # dbs.select(table, cols)
     table = 'Research'
-    cols = ['ResearchID','ResearchTitle', 'ResearchDescription', 'Categories']
-    vals = [1, 'Interesting research about trees in my area', 'I wanted to get information about the trees in my area', 'Trees, nature']
+    cols = ['ResearchID', 'ResearchTitle', 'ResearchDescription', 'Categories']
+    vals = [1, 'Interesting research about trees in my area', 'I wanted to get information about the trees in my area',
+            'Trees, nature']
 
     # dbs.insert(table,cols,vals)
     pk = 'ResearchID'
-    res2 = dbs.last_entry(table,pk)
+    res2 = dbs.last_entry(table, pk)
     print(res2)
 
 # else:
