@@ -131,7 +131,7 @@ button.btn{
                 </div>
                 </div>
 
-                <form action="/project_page" method="POST" enctype="multipart/form-data">
+                <form action="/project" method="POST" enctype="multipart/form-data">
 
                     <div id="upload">
                         <h2>Select an image to upload</h2>
@@ -147,6 +147,9 @@ button.btn{
 
                 <div id ="gallery">
                     <h1>Current Photos</h1>
+                    {% for pic in pics %}
+                    <img src={{pic}} alt="research Img" style="width:200px;height:300px;">
+                    {% endfor %}
                 </div>
             </div>
         </div>

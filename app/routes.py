@@ -14,25 +14,28 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/picture')
+@app.route('/project')
 def upload_form():
-    return render_template('project_page.html')
+    relevantpics = ImageHandle.getPics()
+    pics = [Constants.STATICDIR + x for x in relevantpics]
+    print(pics)
+    return render_template('project_page.html',pics = pics)
 
 
-@app.route('/picture', methods=['POST'])
+@app.route('/project', methods=['POST'])
 def upload_image():
     if request.method == "POST" and request.files:
         image = request.files["image"]
         ImageHandle.save_img(image)
         return redirect(request.url)
 
-    return render_template("upload.html")
+    return render_template("project_page.html")
 
 
 @app.route('/browse')
 def view_projects():
     obj = DbManager()
-    data = obj.select('Research', Constants.RESEARCHCOLS)
+    data = obj.select('Research', Constants.STATICDIR)
     print(data)
     return render_template('catalog.html', projects = data)
 
