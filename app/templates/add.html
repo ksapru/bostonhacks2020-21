@@ -61,8 +61,12 @@
             color: #fff;
             border-radius: 5px;
             
-
-        }        
+        }     
+        textarea{
+            display: block;
+            margin-bottom: 1%;
+            font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+        }   
         
         
         </style>
@@ -79,15 +83,18 @@
             </nav>
             <div id="content">
 
-                <form action="/project_page" method="POST" enctype="multipart/form-data">
+                <form action="/add" method="POST" enctype="multipart/form-data">
 
                     <div id="upload">
                         <h1>Create You Own Project</h1>
                         <label for="name"><b>Project Name</b></label>
-                        <input type="text" class="form" placeholder="Enter Project name" name="project_name" required>
+                        <input type="text" class="form" placeholder="Enter Project name" name="ResearchTitle" required>
+                        <label for="description"><b>Description</b></label>
+                        <textarea name="ResearchDescription" rows="4" cols="50"></textarea>
 
-                       <label for="description"><b>Project Description</b></label>
-                       <input type="text" class="form" placeholder="Description" name="des" required>
+                       <label for="category"><b>Category</b></label>
+                       <input type="text" class="form" placeholder="Category" name="Categories" required>
+                        <input type="hidden" name="ResearchID" value="2">
                        <button type="submit">Post</button>
                     </div>
             

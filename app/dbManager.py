@@ -13,7 +13,7 @@ class DbManager:
 
     def formattedCols(self, base, items, token='\"', calltype='select'):
         for item in items:
-            if calltype == 'select' or type(item) != type(''):
+            if calltype == 'select' or type(item) == type(''):
                 item = str(item)
                 base += token
                 base += item

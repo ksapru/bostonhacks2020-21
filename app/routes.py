@@ -27,6 +27,32 @@ def upload_image():
         return redirect(request.url)
 
     return render_template("upload.html")
+@app.route('/add')
+def addition1():
+    return render_template('add.html')
+
+@app.route('/add', methods=['POST'])
+def addition():
+    if request.method == 'POST':
+        result = request.form
+    names = list(result.keys())
+    values = list(result.values())
+
+    obj = DbManager()
+    table = "Research"
+    cols = names
+    vals = values
+    vals[-1] = obj.last_entry(table,"ResearchID") + 1
+    print(cols,vals)
+    obj.insert(table, cols, vals)
+    return redirect(request.url)
+
+
+
+
+
+
+
 
 
 @app.route('/display/<filename>')
