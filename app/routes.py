@@ -1,3 +1,14 @@
+import users as users
+
+from dbconnect import session
+
+
+def user(username, password):
+    pass
+
+
+users.append(user(username ='Anthony', password ='password'))
+users.append(user(username ='bob', password ='password'))
 import os
 from flask import render_template
 from app import app
@@ -55,7 +66,7 @@ def display_image(filename):
     return redirect(url_for('static', filename='uploads/' + filename), code=301)
 
 
-@app.route('/')
+@app.route('/login', methods = ['GET','POST'])
 def login():
     error = None
     if request.method == 'POST':
@@ -64,9 +75,10 @@ def login():
         else:
             session['logged_in'] = True
             return redirect(url_for('home'))
-    return render_template(('login.html', error = error))
+    return render_template(('login.html', None)
 
-@app.route('/logout')
+
+@app.route('/logout()')
 def logout():
     session.pop('logged_in', None)
     return redirect(url_for('welcome.'))
