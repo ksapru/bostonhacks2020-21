@@ -11,7 +11,7 @@ class DbManager:
         self.conn = dbconnect.DB()
         os.chdir(pwd)
 
-    def formattedCols(self, base, items, token = '\"'):
+    def formattedCols(self, base, items, token='\"'):
         for item in items:
             base += token
             base += item
@@ -36,17 +36,17 @@ class DbManager:
 
         statement = "INSERT into " + self.conn.keyspace + '.' + table + " ("
 
-        statement = self.formattedCols(statement, cols) + ") "
+        statement = self.formattedCols(statement, cols, '\"') + ") "
 
         statement += "VALUES ("
-        statement = self.formattedCols(statement, vals) + ");"
+        statement = self.formattedCols(statement, vals, '\'') + ");"
 
         print(statement)
         try:
             session.execute(statement).one()
 
         except Exception as e:
-            print('Error with insert',e)
+            print('Error with insert', e)
             return
 
         print('Insert success')
@@ -72,11 +72,12 @@ class DbManager:
         return [x for x in res1[0]]
         # return []
 
+
 if __name__ == '__main__':
     dbs = DbManager()
     table = 'Users'
     cols = ['Username', 'Email', 'Password']
-    vals = ['Smaran', 'smarangk@test.com', 'password']
+    vals = ['Smaran2', 'smarangk@test.com', 'password']
     res1 = dbs.select(table, cols)
     print(res1)
 
