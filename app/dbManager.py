@@ -11,11 +11,12 @@ class DbManager:
         self.conn = dbconnect.DB()
         os.chdir(pwd)
 
-    def formattedCols(self, base, items):
+    def formattedCols(self, base, items, token = '\"'):
         for item in items:
-            base += '\''
+            base += token
             base += item
-            base += '\','
+            base += token
+            base += ','
 
         base = base[:-1]
         return base
@@ -62,13 +63,14 @@ class DbManager:
         else:
             statement += "("
 
-            statement = self.formattedCols(statement, cols) + ") "
+            statement = self.formattedCols(statement, cols, '\"') + ") "
 
         statement += "FROM " + self.conn.keyspace + "." + table + ';'
+        print(statement)
         session = self.conn.session
         res1 = session.execute(statement).one()
         return [x for x in res1[0]]
-
+        # return []
 
 if __name__ == '__main__':
     dbs = DbManager()
@@ -78,7 +80,7 @@ if __name__ == '__main__':
     res1 = dbs.select(table, cols)
     print(res1)
 
-    # dbs.insert(table, cols, vals)
+    dbs.insert(table, cols, vals)
     dbs.select(table, cols)
 
 # else:

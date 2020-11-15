@@ -1,5 +1,4 @@
 import os
-from flask import render_template, session
 from app import app
 import urllib.request
 from flask import Flask, flash, request, redirect, url_for, render_template
@@ -7,11 +6,12 @@ from werkzeug.utils import secure_filename
 
 from config import Constants
 from app.ImageHandling import ImageHandle
+from app.dbManager import DbManager
 
 
-@app.route("/")
-def index():
-    return "Log in: research:"
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 
 @app.route('/picture')
@@ -52,7 +52,12 @@ def upload_image():
 @app.route('/display/<filename>')
 def display_image(filename):
     # print('display_image filename: ' + filename)
+    dbconnect = DbManager()
+    table = "Research"
+    col = ["ResearchTitle","Category"]
+    result =dbconnect.select(table,col)
     return redirect(url_for('static', filename='uploads/' + filename), code=301)
+
 
 def login_required(f):
     pass
@@ -65,16 +70,8 @@ def login_required(f):
     #         return redirect(url_for('login'))
     #     return wrap
 
-@app.route('/')
-def home():
-    return render_template('index.html')
 
-@app.route('/welcome')
-def welcome():
-    return render_template('login.html')
-
-
-@app.route('/login', methods = ['GET','POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     # if request.method == 'POST':
@@ -85,3 +82,7 @@ def login():
     #         return redirect(url_for('home'))
     return render_template(('login.html'))
 
+
+@app.route('/welcome')
+def welcome():
+    return render_template('login.html')
