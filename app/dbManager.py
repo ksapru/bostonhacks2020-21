@@ -22,7 +22,7 @@ class DbManager:
 
             else:
                 if type(item) == type(1):
-                    base += item
+                    base += str(item)
                     base += ','
 
         base = base[:-1]
