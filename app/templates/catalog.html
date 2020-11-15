@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <style>
         body{
             margin: 0;
             font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+            background-color: #fafbfc;
         }
         nav{
             text-align: center;
@@ -18,6 +20,10 @@
             font-size: 2.5vh;
             margin-right: 10%;
         }
+        .nav-link{
+            text-decoration: none;
+            color: #000;
+        }
         #main{
             max-width: 1000px;
             background-color: #fafbfc;
@@ -26,7 +32,9 @@
         }
         #container{
             margin-top: 3%;
-            border: 1px solid #ededed;
+            border-top: 1px solid #0d0d0d;
+            border-right: 1px solid#0d0d0d;
+            border-left: 1px solid #0d0d0d;
             border-radius: 5px;
             padding-left: 10px;
         }
@@ -39,6 +47,9 @@
         h2{
             font-size: 3.5vh;
             display: inline-block
+        }
+        #linkb{
+            color: #fff;
         }
         h3{
             font-size: 3vh;
@@ -68,11 +79,12 @@
          }
         #box{
             width: 50%;
+            font-size: 2.5vh;
             display: inline-block;
             height: 4.5vh;
             border-radius: 3.5px;
             margin-bottom: 4%;
-            border: 1px solid #ccc;
+            border: 1px solid #ff4dac;
             box-sizing: border-box;
         }
         
@@ -84,15 +96,15 @@
     	<div id="wrapper">
             <nav>
                 <ul>
-                    <li>Animals</li>
-                    <li>Plants</li>
-                    <li>Other</li>
+                    <li><a href="#" class="nav-link">Animals</a></li>
+                    <li><a href="#" class="nav-link">Plants</a></li>
+                    <li><a href="#" class="nav-link">Other</a></li>
                 </ul>
             </nav>
             <div id="main">
             <div id="headline">
                 <h2>Find research projects where you can contribute</h2>
-                <button id="add">Add project</button>
+                <button id="add"><a href="add.html" id="linkb">Add project</a></button>
                 <input type="text" placeholder="Type" name="search" id="box"/>
                 <button id="search">Search</button>
             </div>

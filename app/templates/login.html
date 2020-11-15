@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <style>
         body{
             font-family: neue-haas-grotesk-display,Helvetica,Arial,sans-serif;;
@@ -10,10 +11,8 @@
             margin-top: 3%;
         }
         #res_login{
-            margin-left: 30%;
-            margin-top: 10%;
-            width: 500px;
-            min-width: 300px;
+            max-width: 600px;
+            margin: 10% auto 0 auto;
             padding-top: 1%;
             background-color: #f6f8fa;
             padding-left: 2%;
@@ -32,6 +31,20 @@
             border: 1px solid #ccc;
             box-sizing: border-box;
         }
+        @media only screen and (max-width: 600px){
+            #res_login{
+            width: 100%;
+            margin-top: 10%;
+            padding-top: 1%;
+            background-color: #f6f8fa;
+            padding-left: 2%;
+            box-sizing: border-box;
+            padding-bottom: 2%;
+            border: 1px solid #000;
+            border-radius: 5px;
+
+        }
+        }
         button{
             width: 85%;
             height: 5%;
@@ -46,21 +59,8 @@
         }
         h1{
             color: #28a745;
-            margin-left: 32%;
-        }
-        @media only screen and (max-width: 600px){
-            #res_login{
-            margin-left: 0;
-            margin-top: 10%;
-            width: 100%;
-            padding-top: 1%;
-            background-color: #f6f8fa;
-            padding-left: 2%;
-            box-sizing: border-box;
-            padding-bottom: 2%;
-            border: 1px solid #000;
-            border-radius: 5px;
-
+            width: 12px;
+            margin-left: 30%;
         }
 
         }

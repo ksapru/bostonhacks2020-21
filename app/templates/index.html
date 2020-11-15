@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <style>
         body{
             margin: 0;
@@ -74,12 +75,19 @@
             margin-right: 0.5%;
         }
         @media only screen and (max-width: 600px){
+            #intro-text{
+                width: 100%;
+            }
             .gallery{
                 display: block;
                 min-width: 300px;
                 margin-bottom: 2px;
                 
             }
+        }
+        a{
+            text-decoration: none;
+            color: #fff;
         }
         
         
@@ -90,9 +98,8 @@
     	<div id="wrapper">
             <nav>
                 <ul>
-                    <li>Sign up</li>
-                    <li>Researcher log in</li>
-                    <li>Participant log in</li>
+                    <li><a href="signup.html">Sign up</a></li>
+                    <li><a href="login.html">Log In</a></li>
                 </ul>
             </nav>
             <div id="intro">
