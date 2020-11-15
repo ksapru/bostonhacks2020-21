@@ -15,6 +15,6 @@ class Utils:
         else:
             folders = path.split('/')
 
-        folders = folders[:folders.index('BostonHacks21') + 1]
+        folders = folders[:folders.index('bostonhacks2020-21') + 1]
         return '/'.join(folders)
 
